@@ -1,0 +1,6 @@
+@FSab_HostAddress = https://localhost:8000
+
+GET {{FSab_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
