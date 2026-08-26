@@ -1,6 +1,88 @@
 @FSab_HostAddress = https://localhost:8000
+@FSab_azure = http://fsab-webapp.azurewebsites.net/
+@FSab_AuthToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlQ1aDQwcTdHMHg0OXFuNDFsTTkta0tqcEQ5OCIsImtpZCI6IlQ1aDQwcTdHMHg0OXFuNDFsTTkta0tqcEQ5OCJ9.eyJhdWQiOiJhcGk6Ly8zOWE4Y2UyNS05YTVhLTQ1ZmMtOWU0OS1iZTQ2YzFhNjZlOTciLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9hNDllMjcxYi0zYWYwLTRkMDMtOWU3Mi1mNjFhNTY0MmU2NTAvIiwiaWF0IjoxNzg3NzUyMTkzLCJuYmYiOjE3ODc3NTIxOTMsImV4cCI6MTc4Nzc1Nzc3MiwiYWNyIjoiMSIsImFpbyI6IkFYUUFpLzhjQUFBQWpHemhjbzlGelhXajc0TEhtVnRFVXhLSWlqbHFpRlMwbUJkNTRib1FMcVdVb0Q0bis4ZDZCMGF6SVJ6KytXeUlVcHVQdG9rTk1lUVM2VDlRTkpaZzFaOFNTZUNiN1NQYytERm9QNHhJc01jTmZUM3VDY0tWeTlkelZUcVlOWHJzM2hwUmJWaEZMeTVzNEZNcnh1TVFIQT09IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJhcHBpZCI6IjU5YTAzYzAwLTQ3YWQtNGZmOS1hOWU2LTNjNGIyMGFhYzY1NSIsImFwcGlkYWNyIjoiMCIsImlwYWRkciI6Ijk4LjEyOC4xNjYuMjIwIiwibmFtZSI6ImF6dXJlamVuc2VuMTM5Iiwib2lkIjoiOTcyNmViYzMtOWI1OC00ZWUyLTgzYTItYzhiMDlmMWUyYTZiIiwicmgiOiIxLkFTOEFHeWVlcFBBNkEwMmVjdllhVmtMbVVDWE9xRGxhbXZ4Rm5rbS1Sc0dtYnBjQkFEMHZBQS4iLCJyb2xlcyI6WyJQcm9wZXJ0eU1hbmFnZXIiXSwic2NwIjoiYWNjZXNzX2FzX3VzZXIiLCJzaWQiOiIwMDdlMTE4YS1kMWY5LWZkY2ItMGFlOC1kM2ZlZjc2Y2ZhYTEiLCJzdWIiOiIwNVhXTkY0SnZLeG05Z2FPTExkRmx2aDQxMF9kQjNtcG8zYzk4M05qM19VIiwidGlkIjoiYTQ5ZTI3MWItM2FmMC00ZDAzLTllNzItZjYxYTU2NDJlNjUwIiwidW5pcXVlX25hbWUiOiJhenVyZWplbnNlbjEzOUBzdHVkZW50ZWR1amVuc2VuLm9ubWljcm9zb2Z0LmNvbSIsInVwbiI6ImF6dXJlamVuc2VuMTM5QHN0dWRlbnRlZHVqZW5zZW4ub25taWNyb3NvZnQuY29tIiwidXRpIjoiSmdhaElSRUR5RXVYU25odVZUUFZBUSIsInZlciI6IjEuMCIsInhtc19mdGQiOiJuZ3JiSzl5SHo4bDdKQmpIUk5PQV9DTk4wTkZfcC1Well0WEgzS0hTWFdVQlpuSmhibU5sWXkxa2MyMXoifQ.FnJbsCLje--Db0wLuVGJqQ1Pd-niSIzVg_W-9rXNZ_COEalRfd4FQLQkIf1j_7pPZTQRh2cny55nEIrd95r9zBilo3Im35ZsXR6Wm9ANuBi8LJFd0CLCnxuNUlcCbDO9m4UTDTPEsFf7n6AIp0V5nXjOkMyIhXF9WQbNu-ce5fb2qciw0H5FXAYsTPAHkaBaz8elfMCrgIGOnsVh7ADIz9cJwKiPef3QWMI-g4zZhi2p9AxcQQE3M1gXf4OnHwJCaLhxHT6_QdIhssDlLnMMe2l5HShsOzi9uqvSRi5KDYs3Mc-REO0LzUvB7YV_EGZSW_H_ojhawddjzN9mgxwBvQ
 
-GET {{FSab_HostAddress}}/weatherforecast/
+###Hämta FaultReports
+
+GET {{FSab_HostAddress}}/api/FaultReports
 Accept: application/json
+Authorization: Bearer {{FSab_AuthToken}}
 
-###
+###Hämta FaultReports med ID
+
+GET {{FSab_HostAddress}}/api/FaultReports/1
+Accept: application/json
+Authorization: Bearer {{FSab_AuthToken}}
+
+
+###Skapa FaultReports
+
+POST {{FSab_HostAddress}}/api/FaultReports
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{FSab_AuthToken}}
+{
+  "Title": "Test Fault Report6",
+  "Description": "This is a test fault report created via the API."
+}
+
+###Updatera FaultReports
+
+PUT {{FSab_HostAddress}}/api/FaultReports/1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{FSab_AuthToken}}
+{
+  "Title": "UpdatedTest Fault Report",
+  "Description": "This is a updated test fault report created via the API.",
+  "Status": 1
+}
+
+###Ta bort FaultReports
+
+DELETE {{FSab_HostAddress}}/api/FaultReports/5
+Accept: application/json
+Authorization: Bearer {{FSab_AuthToken}}
+
+###AZURE
+
+### Hämta FaultReports från Azure
+
+GET {{FSab_azure}}/api/FaultReports
+Accept: application/json
+Authorization: Bearer {{FSab_AuthToken}}
+
+###Skapa FaultReports via azure
+
+POST {{FSab_azure}}/api/FaultReports
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{FSab_AuthToken}}
+{
+  "Title": "Test Fault Report6",
+  "Description": "This is a test fault report created via the API."
+}
+
+###Hämta FaultReports med ID via Azure
+
+GET {{FSab_azure}}/api/FaultReports/1
+Accept: application/json
+Authorization: Bearer {{FSab_AuthToken}}
+
+###Updatera FaultReports via azure
+
+PUT {{FSab_azure}}/api/FaultReports/1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{FSab_AuthToken}}
+{
+  "Title": "UpdatedTest Fault Report",
+  "Description": "This is a updated test fault report created via the API.",
+  "Status": 1
+}
+
+###Ta bort FaultReports via azure
+
+DELETE {{FSab_azure}}/api/FaultReports/1
+Accept: application/json
+Authorization: Bearer {{FSab_AuthToken}}
