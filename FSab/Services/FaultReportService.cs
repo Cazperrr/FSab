@@ -11,9 +11,11 @@ namespace FSab.Services
     public class FaultReportService : IFaultReportService
     {
         private readonly AppDbContext _context;
-        public FaultReportService(AppDbContext context)
+        private readonly ISMSNotifyer _smsnotifyer;
+        public FaultReportService(AppDbContext context, ISMSNotifyer smsNotifyer)
         {
             _context = context;
+            _smsnotifyer = smsNotifyer;
         }
 
         public async Task<IEnumerable<FaultReportDto>> GetFaultReportsAsync(ClaimsPrincipal user)
@@ -33,7 +35,7 @@ namespace FSab.Services
                     .ToListAsync();
             }
 
-            var oid = user.FindFirst("oid")?.Value;
+            var oid = user.FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier")?.Value;
 
             if (oid is null)
                 return [];
@@ -62,7 +64,7 @@ namespace FSab.Services
             if (user.IsInRole("PropertyManager"))
                 return MapToDto(faultReport);
 
-            var oid = user.FindFirst("oid")?.Value;
+            var oid = user.FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier")?.Value;
 
             if (faultReport.CreatedBy != oid)
                 return null;
@@ -71,9 +73,8 @@ namespace FSab.Services
         }
         public async Task<FaultReportDto> CreateFaultReportAsync(CreateFaultReportDto dto, ClaimsPrincipal user)
         {
-            var oid = user.FindFirst("oid")?.Value;
+            var oid = user.FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier")?.Value;
 
-            //TODO: Return null instead?
             if (oid is null)
                 throw new UnauthorizedAccessException();
 
@@ -88,6 +89,8 @@ namespace FSab.Services
 
             _context.FaultReports.Add(faultReport);
             await _context.SaveChangesAsync();
+
+            await _smsnotifyer.SendSMSAsync($"Ny felanmälan skapad: {faultReport.Title}");
 
             return MapToDto(faultReport);
         }
